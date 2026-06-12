@@ -1101,41 +1101,103 @@ let participantesData = [];
 let anotacionesData = [];
 let listaParticipantesLocal = []; // caché para filtrado ágil del admin
 
+// ✅ CARGA DINÁMICA DE CURSOS/ACTIVIDADES CON CONTROL DE CUPOS REALES
 async function actualizarCursos(){
-
   let select = document.getElementById("curso");
   if(!select) return;
 
   select.innerHTML = "";
-
-  if(!supabaseClient) return;
+  if (!supabaseClient) return;
 
   try {
-
-    for(let id in actividadesData){
-
+    for (let id in actividadesData) {
       let act = actividadesData[id];
-
-      let registrados = participantesData.filter(
-        p => String(p.actividad_id) === String(act.id)
-      ).length;
-
+let registrados = participantesData.filter(
+  p => String(p.actividad_id) === String(curso)
+).length;
       let disponibles = act.cupos_totales - registrados;
 
-      // ocultar actividades agotadas
-      if(disponibles <= 0) continue;
-
-      let option = document.createElement("option");
-
-      option.value = act.id;
-      option.textContent =
-        `${act.title} (${disponibles} cupos libres)`;
-
-      select.appendChild(option);
+      if (disponibles > 0) {
+        let option = document.createElement("option");
+        option.value = act.id;
+        option.textContent = `${act.title} (${disponibles} cupos libres)`;
+        select.appendChild(option);
+      }
     }
+  } catch (err) {
+    console.warn("Error al actualizar catálogo de cursos:", err);
+  }
+}
 
-  } catch(err){
-    console.warn("Error al actualizar catálogo:", err);
+// CARGADORES DE BASE DE DATOS
+async function loadActividades() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient.from('actividades').select('*');
+    if (!error && data) {
+      actividadesData = {};
+      data.forEach(item => {
+        actividadesData[item.id] = {
+          id: item.id,
+          title: item.title,
+          description: item.description,
+start: item.start_date,
+          cupos_totales: item.cupos_totales || 15
+        };
+      });
+      renderCalendar();
+      actualizarCursos();
+    }
+  } catch(err) {
+    console.warn(err);
+  }
+}
+
+async function loadParticipantes() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient.from('participantes').select('*');
+    if (!error && data) {
+      participantesData = data;
+      renderCalendar();
+      actualizarCursos();
+      if(document.getElementById("seccionInscritos").style.display === "block") {
+        mostrarInscritos();
+      }
+    }
+  } catch(err) {
+    console.warn(err);
+  }
+}
+
+// Solo el administrador registrado puede jalar las notas desde el servidor
+async function loadAnotaciones() {
+  if (!supabaseClient || !esAdmin) return;
+  try {
+    const { data, error } = await supabaseClient.from('notas_admin').select('*');
+    if (error) return;
+
+    anotacionesData = data || [];
+
+    // Limpia sólo anotaciones antes de pintar
+    calendar.getEvents().forEach(e => {
+      if(e.extendedProps.tipo === "anotacion"){
+        e.remove();
+      }
+    });
+
+    anotacionesData.forEach(a => {
+     calendar.addEvent({
+  id: act.id,
+  title: titleStr,
+       allDay: true,
+       allDay:true,
+  description: act.description,
+  classNames: classList,
+      });
+    });
+  } catch(err) {
+    console.warn(err);
   }
 }
 
@@ -1359,10 +1421,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 📅 3. CARGA NO BLOQUEANTE DE BASE DE DATOS
   async function inicializarDatosBase() {
-   if (!supabaseClient){
-  alert("No hay conexión con Supabase");
-  return;
-}
+    if (!supabaseClient) return;
+    try {
       await loadActividades();
       await loadInscripciones();
     } catch (err) {
@@ -1414,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
 let registrados = participantesData.filter(
-  p => String(p.actividad_id) === String(act.id)
+  p => String(p.actividad_id) === String(curso)
 ).length;
     let disponibles = act.cupos_totales - registrados;
 
@@ -1704,15 +1764,13 @@ async function crearActividad(){
     return;
   }
 
-if (!supabaseClient){
-  alert("Supabase NO conectado");
-  return;
-}
+  if (!supabaseClient) return;
+
   try {
     const { error } = await supabaseClient.from('actividades').insert([
       { title: titulo, description: descripcion, start_date: fecha, cupos_totales: cupos }
     ]);
-console.log(error);
+
     if (error) {
       alert("Error al guardar actividad: " + error.message);
       return;
