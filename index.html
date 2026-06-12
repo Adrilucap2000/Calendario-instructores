@@ -1049,18 +1049,25 @@ ADMIN
 
 <script>
 // VARIABLES DE ENTORNO Y CREDENCIALES (Ajustar antes de subir a producción)
-const SUPABASE_URL = "https://pgutokvlrpsytzcroknr.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_Be36GcayXp_NMt_iPXjjgQ_1igPBqmS";
+const SUPABASE_URL = "https://ihxqzdusayhnazyggonv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_KYg5lrd7EbOQFoWE0sBqhw_DYm6CqsG";
 
 let supabaseClient = null;
+
 try {
-  if (window.supabase && SUPABASE_URL && SUPABASE_URL !== "YOUR_SUPABASE_URL" && SUPABASE_URL.startsWith("http")) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  } else {
-    console.warn("Supabase no se ha configurado de forma completa. Ingresa tus credenciales.");
+  if (
+    window.supabase &&
+    SUPABASE_URL &&
+    SUPABASE_URL.startsWith("http")
+  ) {
+    supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+      );
   }
 } catch (err) {
-  console.error("Error al arrancar SupabaseClient:", err);
+  console.error(err);
 }
 
 function toggleActividades(){
