@@ -1359,8 +1359,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // 📅 3. CARGA NO BLOQUEANTE DE BASE DE DATOS
   async function inicializarDatosBase() {
-    if (!supabaseClient) return;
-    try {
+   if (!supabaseClient){
+  alert("No hay conexión con Supabase");
+  return;
+}
       await loadActividades();
       await loadInscripciones();
     } catch (err) {
