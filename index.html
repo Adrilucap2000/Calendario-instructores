@@ -1704,13 +1704,15 @@ async function crearActividad(){
     return;
   }
 
-  if (!supabaseClient) return;
-
+if (!supabaseClient){
+  alert("Supabase NO conectado");
+  return;
+}
   try {
     const { error } = await supabaseClient.from('actividades').insert([
       { title: titulo, description: descripcion, start_date: fecha, cupos_totales: cupos }
     ]);
-
+console.log(error);
     if (error) {
       alert("Error al guardar actividad: " + error.message);
       return;
