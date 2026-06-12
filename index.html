@@ -165,9 +165,9 @@ body{
   background:
   linear-gradient(
     to bottom,
-    rgba(90,10,20,0.15) 0%,
-    rgba(90,10,20,0.10) 50%,
-    rgba(90,10,20,0.05) 100%
+    rgba(5,85,112,0.15) 0%,
+    rgba(5,85,112,0.10) 50%,
+    rgba(5,85,112,0.05) 100%
   ),
   url("https://i.imgur.com/haOZZoS.gif");
 
@@ -221,9 +221,9 @@ height:100%;
 pointer-events:none;
 z-index:0;
 background-image:
-radial-gradient(#FFD700 2px, transparent 2px),
-radial-gradient(#F2C94C 1px, transparent 1px),
-radial-gradient(#FFF5CC 1px, transparent 1px);
+radial-gradient(#4DA6FF 2px, transparent 2px),
+radial-gradient(#0A3D9A1px, transparent 1px),
+radial-gradient(#D6E8FF 1px, transparent 1px);
 background-size:
 120px 120px,
 80px 80px,
@@ -244,7 +244,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background-image:radial-gradient(#F2C94C 1px, transparent 1px);
+background-image:radial-gradient(#4DA6FF 1px, transparent 1px);
 background-size:50px 50px;
 opacity:0.15;
 animation:estrellas 40s linear infinite;
@@ -260,21 +260,21 @@ to{transform:translateY(-200px)}
 
 0%{
 box-shadow:
-0 0 5px #F2C94C,
-0 0 10px #F2C94C;
+0 0 5px #0A3D9A,
+0 0 10px #0A3D9A;
 }
 
 50%{
 box-shadow:
-0 0 10px #FFD700,
-0 0 25px #FFD700,
-0 0 40px #FFF5CC;
+0 0 10px #4DA6FF,
+0 0 25px #4DA6FF,
+0 0 40px #D6E8FF;
 }
 
 100%{
 box-shadow:
-0 0 5px #F2C94C,
-0 0 10px #F2C94C;
+0 0 5px #0A3D9A,
+0 0 10px #0A3D9A;
 }
 
 }
@@ -299,7 +299,7 @@ content:"";
 display:block;
 width:250px;
 height:3px;
-#052970;
+background:#052970;
 margin:12px auto;
 border-radius:5px;
 
@@ -635,7 +635,7 @@ box-shadow:none;
   z-index:99999;
 
   background:
-  linear-gradient(rgba(90,10,20,0.20),rgba(90,10,20,0.20)),
+  linear-gradient(rgba(5,85,112,0.20),rgba(5,85,112,0.20)),
   url("https://i.imgur.com/haOZZoS.gif");
 
   background-size:cover;
@@ -661,12 +661,12 @@ height:270px;
 border-radius:50%;
 padding:6px;
 
-background: radial-gradient(circle,#FFD700,#b8860b);
+background: radial-gradient(circle,#0A3D9A,#052970);
 
 box-shadow:
-0 0 25px #FFD700,
-0 0 70px #FFD700,
-0 0 140px rgba(255,215,0,0.7);
+0 0 25px #0A3D9A,
+0 0 70px #0A3D9A,
+0 0 140px rgba(10,61,154,0.7);
 
 display:flex;
 justify-content:center;
@@ -695,13 +695,13 @@ border-radius:50%;
 .titulo{
 font-family: 'Great Vibes', cursive;
 font-size:70px;
-color:#FFD700;
+color:#0A3D9A;
 margin-top:30px;
 
 text-shadow:
-0 0 10px #FFD700,
-0 0 20px #FFD700,
-0 0 40px rgba(255,215,0,0.7);
+0 0 5px #0A3D9A,
+0 0 15px #0A3D9A,
+0 0 30px rgba(10,61,154,0.6);
 }
 
 /* INPUT OCULTO */
@@ -995,7 +995,7 @@ Entrar
 position:fixed;
 bottom:20px;
 right:20px;
-background:#7A1E2C;
+background:#052970;
 color:white;
 padding:12px;
 border:none;
@@ -1060,8 +1060,8 @@ function toggleActividades(){
   let btn = document.getElementById("btnActividades");
   if(modoActividades){
     btn.innerText = "Salir de actividades";
-    btn.style.background = "#B22222";
-    modoEscritura = false;
+btn.style.background = "#0A3D9A";
+  modoEscritura = false;
   } else {
     btn.innerText = "Actividades";
     btn.style.background = "";
@@ -1837,7 +1837,7 @@ function toggleAnotaciones(){
 
   if(modoEscritura){
     btn.innerText = "Salir de anotaciones";
-    btn.style.background = "#B22222";
+btn.style.background = "#0A3D9A";
   } else {
     btn.innerText = "Anotaciones";
     btn.style.background = "";
