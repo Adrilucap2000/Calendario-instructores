@@ -1113,7 +1113,7 @@ async function actualizarCursos(){
     for (let id in actividadesData) {
       let act = actividadesData[id];
 let registrados = participantesData.filter(
-  p => String(p.actividad_id) === String(act.id)
+  p => String(p.actividad_id) === String(curso)
 ).length;
       let disponibles = act.cupos_totales - registrados;
 
@@ -1190,8 +1190,8 @@ async function loadAnotaciones() {
      calendar.addEvent({
   id: act.id,
   title: titleStr,
-  start: act.start,
-  allDay:true,
+       allDay: true,
+       allDay:true,
   description: act.description,
   classNames: classList,
       });
@@ -1473,7 +1473,9 @@ document.addEventListener('DOMContentLoaded', function(){
       return;
     }
 
-let registrados = participantesData.filter(p => String(p.actividad_id) === String(id)).length;
+let registrados = participantesData.filter(
+  p => String(p.actividad_id) === String(curso)
+).length;
     let disponibles = act.cupos_totales - registrados;
 
     if (disponibles <= 0) {
