@@ -1112,7 +1112,7 @@ async function actualizarCursos(){
   try {
     for (let id in actividadesData) {
       let act = actividadesData[id];
-      let registrados = participantesData.filter(p => p.actividad_id === id).length;
+let registrados = participantesData.filter(p => String(p.actividad_id) === String(id)).length;
       let disponibles = act.cupos_totales - registrados;
 
       if (disponibles > 0) {
@@ -1471,7 +1471,7 @@ document.addEventListener('DOMContentLoaded', function(){
       return;
     }
 
-    let registrados = participantesData.filter(p => p.actividad_id === curso).length;
+let registrados = participantesData.filter(p => String(p.actividad_id) === String(id)).length;
     let disponibles = act.cupos_totales - registrados;
 
     if (disponibles <= 0) {
